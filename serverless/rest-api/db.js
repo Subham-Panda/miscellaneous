@@ -10,4 +10,5 @@ module.exports = connectToDatabase = async() => {
 
     console.log("----Makign new connection to database");
     mongoose.connect(process.env.DB);
+    isConnected = true;
 }
