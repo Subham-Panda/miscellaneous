@@ -1,5 +1,10 @@
 'use strict';
 
+require('dotenv').config({ path: './.env' });
+
+const connectToDatabase = require('./db');
+const Note = require('./models/Note');
+
 // callbackWaitsForEmptyEventLoop – Set to false to send the response right away when the callback runs, instead of waiting for the Node.js event loop to be empty. If this is false, any outstanding events continue to run during the next invocation.
 
 module.exports.create = async (event, context) => {
