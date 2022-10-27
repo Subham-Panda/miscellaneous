@@ -23,6 +23,9 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs12.x
+  memorySize: 128 # this sets the maximum emory of the Lambdas in Megabytes
+  timeout: 10 # default timeout is 6 seconds
+  stage: dev # this sets the env variable stage to dev. It will reflect in the routes
 
 # you can overwrite defaults here
 #  stage: dev
@@ -58,9 +61,46 @@ provider:
 #    - include-me.js
 #    - include-me-dir/**
 
-functions:
-  hello:
-    handler: handler.hello
+functions: # lets add 4 crud functions
+  create:
+    handler: handler.create
+    events:
+      - http:
+          path: notes # so route will be domain/dev/notes
+          method: post
+          cors: true
+  getOne:
+    handler: handler.getOne
+    events:
+      - http:
+          path: notes/{id}
+          method: get
+          cors: true
+  getAll:
+    handler: handler.getAll
+    events:
+      - http:
+          path: notes
+          method: get
+          cors: true
+  update:
+    handler: handler.update
+    events:
+      - http:
+          path: notes/{id}
+          method: put
+          cors: true
+  delete:
+    handler: handler.delete
+    events:
+     - http:
+          path: notes/{id}
+          method: delete
+          cors: true
+
+plugins:
+  - serverless-offline
+
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
